@@ -1,6 +1,7 @@
+"use client"
 
 import { ReactNode } from "react";
-import { Navigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import { useAuth } from "../../context/AuthContext";
 import { Loader2 } from "lucide-react";
 
@@ -10,6 +11,7 @@ interface AuthLayoutProps {
 
 export const AuthLayout = ({ children }: AuthLayoutProps) => {
   const { isAuthenticated, isLoading } = useAuth();
+  const router = useRouter();
 
   if (isLoading) {
     return (
@@ -23,7 +25,7 @@ export const AuthLayout = ({ children }: AuthLayoutProps) => {
   }
 
   if (isAuthenticated) {
-    return <Navigate to="/dashboard" replace />;
+    router.push("/dashboard");
   }
 
   return (

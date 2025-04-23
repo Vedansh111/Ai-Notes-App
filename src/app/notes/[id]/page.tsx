@@ -1,16 +1,17 @@
+"use client"
 
-import { useParams, useNavigate } from "react-router-dom";
-import { ProtectedLayout } from "../components/layout/ProtectedLayout";
-import { NoteEditor } from "../components/notes/NoteEditor";
+import { useParams, useRouter } from "next/navigation";
+import { ProtectedLayout } from "@/components/layout/ProtectedLayout";
+import { NoteEditor } from "@/components/notes/NoteEditor";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getNote, updateNote, deleteNote } from "../services/noteService";
-import { toast } from "../components/ui/use-toast";
+import { getNote, updateNote, deleteNote } from "@/services/noteService";
+import { toast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
-import { Note } from "../types";
+import { Note } from "@/types";
 
 const NoteDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   const { data: note, isLoading, error } = useQuery({
@@ -31,7 +32,7 @@ const NoteDetail = () => {
     mutationFn: () => deleteNote(id || ""),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["notes"] });
-      navigate("/dashboard");
+      router.push("/dashboard");
       toast({
         description: "Note deleted successfully",
       });
@@ -73,7 +74,7 @@ const NoteDetail = () => {
           <p className="text-destructive">Error: Note not found</p>
           <button
             className="text-primary mt-4 underline"
-            onClick={() => navigate("/dashboard")}
+            onClick={() => router.push("/dashboard")}
           >
             Return to Dashboard
           </button>

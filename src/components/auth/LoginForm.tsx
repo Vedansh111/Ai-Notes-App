@@ -1,3 +1,4 @@
+"use client"
 
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
@@ -16,7 +17,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -96,7 +97,7 @@ export const LoginForm = () => {
         </Form>
         <div className="mt-4 text-center text-sm">
           Don't have an account?{" "}
-          <Link to="/signup" className="text-primary font-medium hover:underline">
+          <Link href="/signup" className="text-primary font-medium hover:underline">
             Sign up
           </Link>
         </div>

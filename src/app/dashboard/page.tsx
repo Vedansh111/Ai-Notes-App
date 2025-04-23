@@ -1,7 +1,8 @@
+"use client"
 
-import { ProtectedLayout } from "../components/layout/ProtectedLayout";
-import { NoteList } from "../components/notes/NoteList";
-import { useAuth } from "../context/AuthContext";
+import { ProtectedLayout } from "@/components/layout/ProtectedLayout";
+import { NoteList } from "@/components/notes/NoteList";
+import { useAuth } from "@/context/AuthContext";
 
 const Dashboard = () => {
   const { user } = useAuth();

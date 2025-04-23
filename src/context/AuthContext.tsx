@@ -1,7 +1,14 @@
+"use client";
 
-import { createContext, useContext, ReactNode, useState, useEffect } from "react";
-import { AuthState } from "../types";
-import { toast } from "../components/ui/use-toast";
+import {
+  createContext,
+  useContext,
+  ReactNode,
+  useState,
+  useEffect,
+} from "react";
+import { AuthState } from "@/types";
+import { toast } from "@/components/ui/use-toast";
 
 interface AuthContextType extends AuthState {
   signIn: (email: string, password: string) => Promise<void>;
@@ -9,7 +16,16 @@ interface AuthContextType extends AuthState {
   signOut: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const defaultAuthContext: AuthContextType = {
+  user: null,
+  isAuthenticated: false,
+  isLoading: true,
+  signIn: async () => {},
+  signUp: async () => {},
+  signOut: async () => {},
+};
+
+const AuthContext = createContext<AuthContextType>(defaultAuthContext);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [authState, setAuthState] = useState<AuthState>({

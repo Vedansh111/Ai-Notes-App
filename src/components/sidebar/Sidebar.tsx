@@ -2,16 +2,17 @@
 import { useAuth } from "../../context/AuthContext";
 import { Button } from "../ui/button";
 import { FileText, LogOut, Plus } from "lucide-react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 export const Sidebar = () => {
   const { signOut, user } = useAuth();
-  const location = useLocation();
-  const navigate = useNavigate();
+  const pathname = usePathname();
+  const router = useRouter();
   
   const handleSignOut = async () => {
     await signOut();
-    navigate("/login");
+    router.push("/login");
   };
 
   return (
@@ -26,7 +27,7 @@ export const Sidebar = () => {
       <div className="p-4">
         <Button 
           className="w-full flex items-center gap-2"
-          onClick={() => navigate("/notes/new")}
+          onClick={() => router.push("/notes/new")}
         >
           <Plus size={16} />
           New Note
@@ -36,9 +37,9 @@ export const Sidebar = () => {
       <nav className="flex-1 p-4 overflow-auto">
         <div className="space-y-1">
           <Link
-            to="/dashboard"
+            href="/dashboard"
             className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm ${
-              location.pathname === "/dashboard"
+              pathname === "/dashboard"
                 ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
                 : "text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors"
             }`}

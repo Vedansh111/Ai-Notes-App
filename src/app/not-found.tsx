@@ -1,6 +1,6 @@
 
-import { Button } from "../components/ui/button";
-import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const NotFound = () => {
   return (
@@ -12,7 +12,7 @@ const NotFound = () => {
           The page you're looking for doesn't exist or has been moved.
         </p>
         <Button asChild className="mt-6">
-          <Link to="/dashboard">
+          <Link href="/dashboard">
             Go to Dashboard
           </Link>
         </Button>

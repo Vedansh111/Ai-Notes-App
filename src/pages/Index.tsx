@@ -1,6 +1,6 @@
 
 import { Button } from "../components/ui/button";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { useAuth } from "../context/AuthContext";
 import { FileText, PenLine, Sparkles } from "lucide-react";
 
@@ -19,15 +19,15 @@ const Index = () => {
           <div className="flex items-center gap-4">
             {isAuthenticated ? (
               <Button asChild>
-                <Link to="/dashboard">Go to Dashboard</Link>
+                <Link href="/dashboard">Go to Dashboard</Link>
               </Button>
             ) : (
               <>
                 <Button asChild variant="ghost">
-                  <Link to="/login">Sign In</Link>
+                  <Link href="/login">Sign In</Link>
                 </Button>
                 <Button asChild>
-                  <Link to="/signup">Sign Up</Link>
+                  <Link href="/signup">Sign Up</Link>
                 </Button>
               </>
             )}
@@ -48,12 +48,12 @@ const Index = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button size="lg" asChild>
-                <Link to={isAuthenticated ? "/dashboard" : "/signup"}>
+                <Link href={isAuthenticated ? "/dashboard" : "/signup"}>
                   Get Started
                 </Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <Link to="/login">
+                <Link href="/login">
                   Sign In
                 </Link>
               </Button>

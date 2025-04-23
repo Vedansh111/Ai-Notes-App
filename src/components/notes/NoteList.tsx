@@ -1,9 +1,10 @@
+"use client"
 
 import { useQuery } from "@tanstack/react-query";
 import { getNotes } from "../../services/noteService";
 import { NoteCard } from "./NoteCard";
 import { Loader2, SearchX } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import { Input } from "../ui/input";
 import { useState } from "react";
 
@@ -12,7 +13,7 @@ interface NoteListProps {
 }
 
 export const NoteList = ({ userId }: NoteListProps) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   
   const { data: notes, isLoading, error } = useQuery({
@@ -95,7 +96,7 @@ export const NoteList = ({ userId }: NoteListProps) => {
           <NoteCard
             key={note.id}
             note={note}
-            onClick={() => navigate(`/notes/${note.id}`)}
+            onClick={() => router.push(`/notes/${note.id}`)}
           />
         ))}
       </div>

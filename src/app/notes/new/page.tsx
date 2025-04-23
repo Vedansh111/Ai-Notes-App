@@ -1,15 +1,16 @@
+"use client"
 
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import { ProtectedLayout } from "../components/layout/ProtectedLayout";
-import { NoteEditor } from "../components/notes/NoteEditor";
-import { createNote } from "../services/noteService";
-import { toast } from "../components/ui/use-toast";
-import { Note } from "../types";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
+import { ProtectedLayout } from "@/components/layout/ProtectedLayout";
+import { NoteEditor } from "@/components/notes/NoteEditor";
+import { createNote } from "@/services/noteService";
+import { toast } from "@/components/ui/use-toast";
+import { Note } from "@/types";
 
 const NewNote = () => {
   const { user } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleCreateNote = async (noteData: Partial<Note>) => {
     if (!user) return;
@@ -28,7 +29,7 @@ const NewNote = () => {
         description: "Your note has been created successfully",
       });
 
-      navigate(`/notes/${newNote.id}`);
+      router.push(`/notes/${newNote.id}`);
     } catch (error) {
       toast({
         title: "Error creating note",

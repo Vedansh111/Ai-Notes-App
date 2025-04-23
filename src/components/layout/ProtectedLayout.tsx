@@ -1,6 +1,7 @@
+"use client"
 
 import { ReactNode } from "react";
-import { Navigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import { useAuth } from "../../context/AuthContext";
 import { Loader2 } from "lucide-react";
 import { Sidebar } from "../sidebar/Sidebar";
@@ -11,6 +12,7 @@ interface ProtectedLayoutProps {
 
 export const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
   const { isAuthenticated, isLoading } = useAuth();
+  const router = useRouter();
 
   if (isLoading) {
     return (
@@ -24,7 +26,7 @@ export const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
   }
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    router.push("/login");
   }
 
   return (
