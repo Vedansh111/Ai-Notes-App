@@ -1,20 +1,37 @@
-"use client"
-
 import { useParams, useRouter } from "next/navigation";
 import { ProtectedLayout } from "@/components/layout/ProtectedLayout";
 import { NoteEditor } from "@/components/notes/NoteEditor";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getNote, updateNote, deleteNote } from "@/services/noteService";
+import { createClient } from "@/utils/supabase/server";
 import { toast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
 import { Note } from "@/types";
 
-const NoteDetail = () => {
+export async function generateStaticParams() {
+  const supabase = createClient();
+  const { data: notes, error } = await supabase.from("notes").select("id");
+
+  if (error) {
+    console.error("Error fetching notes:", error.message);
+    return [];
+  }
+
+  return notes.map((note) => ({
+    id: note.id,
+  }));
+}
+
+export default function NoteDetail () {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const { data: note, isLoading, error } = useQuery({
+  const {
+    data: note,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["note", id],
     queryFn: () => getNote(id || ""),
     enabled: !!id,
@@ -43,7 +60,7 @@ const NoteDetail = () => {
         description: "Failed to delete note",
         variant: "destructive",
       });
-    }
+    },
   });
 
   const handleSave = async (data: Partial<Note>) => {
@@ -86,15 +103,13 @@ const NoteDetail = () => {
   return (
     <ProtectedLayout>
       <div className="container py-8 max-w-4xl mx-auto">
-        <NoteEditor 
-          note={note} 
-          onSave={handleSave} 
+        <NoteEditor
+          note={note}
+          onSave={handleSave}
           onDelete={handleDelete}
-          isLoading={updateMutation.isPending} 
+          isLoading={updateMutation.isPending}
         />
       </div>
     </ProtectedLayout>
   );
 };
-
-export default NoteDetail;

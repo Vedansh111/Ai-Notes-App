@@ -29,7 +29,7 @@ const NewNote = () => {
         description: "Your note has been created successfully",
       });
 
-      router.push(`/notes/${newNote.id}`);
+      router.push(`/dashboard`);
     } catch (error) {
       toast({
         title: "Error creating note",

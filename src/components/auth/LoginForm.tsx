@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
 import { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
+import { login } from "@/lib/auth-actions";
 import { Button } from "../ui/button";
 import {
   Form,
@@ -12,7 +12,13 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -25,7 +31,6 @@ const loginSchema = z.object({
 });
 
 export const LoginForm = () => {
-  const { signIn } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -39,7 +44,11 @@ export const LoginForm = () => {
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
       setIsLoading(true);
-      await signIn(values.email, values.password);
+      const formData = new FormData();
+      formData.append("email", values.email);
+      formData.append("password", values.password);
+
+      await login(formData);
     } catch (error) {
       console.error("Login error:", error);
     } finally {
@@ -50,7 +59,9 @@ export const LoginForm = () => {
   return (
     <Card className="w-full shadow-lg animate-fade-in">
       <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl font-bold text-center">Sign in</CardTitle>
+        <CardTitle className="text-2xl font-bold text-center">
+          Sign in
+        </CardTitle>
         <CardDescription className="text-center">
           Enter your email and password to access your notes
         </CardDescription>
@@ -97,7 +108,10 @@ export const LoginForm = () => {
         </Form>
         <div className="mt-4 text-center text-sm">
           Don't have an account?{" "}
-          <Link href="/signup" className="text-primary font-medium hover:underline">
+          <Link
+            href="/signup"
+            className="text-primary font-medium hover:underline"
+          >
             Sign up
           </Link>
         </div>

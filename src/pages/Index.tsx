@@ -3,9 +3,14 @@ import { Button } from "../components/ui/button";
 import Link from "next/link";
 import { useAuth } from "../context/AuthContext";
 import { FileText, PenLine, Sparkles } from "lucide-react";
+import { redirect } from 'next/navigation'
 
 const Index = () => {
   const { isAuthenticated } = useAuth();
+
+  if(isAuthenticated) {
+    redirect("/dashboard")
+  }
 
   return (
     <div className="min-h-screen flex flex-col">

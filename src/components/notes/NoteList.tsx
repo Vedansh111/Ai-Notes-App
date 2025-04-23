@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useQuery } from "@tanstack/react-query";
 import { getNotes } from "../../services/noteService";
@@ -15,11 +15,12 @@ interface NoteListProps {
 export const NoteList = ({ userId }: NoteListProps) => {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
-  
+
+  // Set a timeout to stop loading if the query takes too long
   const { data: notes, isLoading, error } = useQuery({
     queryKey: ["notes", userId],
     queryFn: () => getNotes(userId),
-    staleTime: 1000 * 60 * 5, // 5 minutes
+    staleTime: 1000 * 60,
   });
 
   if (isLoading) {
@@ -66,7 +67,7 @@ export const NoteList = ({ userId }: NoteListProps) => {
             className="max-w-md"
           />
         </div>
-        
+
         <div className="text-center py-12">
           <SearchX className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
           {searchQuery ? (
@@ -90,7 +91,7 @@ export const NoteList = ({ userId }: NoteListProps) => {
           className="max-w-md"
         />
       </div>
-      
+
       <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {filteredNotes?.map((note) => (
           <NoteCard

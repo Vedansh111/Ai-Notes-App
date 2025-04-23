@@ -1,3 +1,4 @@
+"use client"
 
 import { useState, useEffect } from "react";
 import { Button } from "../ui/button";
@@ -37,7 +38,6 @@ export const NoteEditor = ({
   const [content, setContent] = useState(note?.content || "");
   const [summary, setSummary] = useState(note?.summary || "");
   const [isSummarizing, setIsSummarizing] = useState(false);
-  const [saveTimeout, setSaveTimeout] = useState<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (note) {
@@ -49,24 +49,10 @@ export const NoteEditor = ({
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
-    autoSave(e.target.value, content, summary);
   };
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
-    autoSave(title, e.target.value, summary);
-  };
-
-  const autoSave = (newTitle: string, newContent: string, newSummary: string) => {
-    if (saveTimeout) {
-      clearTimeout(saveTimeout);
-    }
-    
-    const timeout = setTimeout(() => {
-      handleSave(newTitle, newContent, newSummary);
-    }, 2000);
-    
-    setSaveTimeout(timeout);
   };
 
   const handleSave = async (

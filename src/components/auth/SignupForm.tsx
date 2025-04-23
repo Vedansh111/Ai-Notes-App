@@ -1,7 +1,6 @@
-"use client"
+"use client";
 
 import { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
 import { Button } from "../ui/button";
 import {
   Form,
@@ -12,18 +11,27 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
+import { signup } from "@/lib/auth-actions";
 
 const signupSchema = z
   .object({
     email: z.string().email("Invalid email address"),
     password: z.string().min(6, "Password must be at least 6 characters"),
-    confirmPassword: z.string().min(6, "Password must be at least 6 characters"),
+    confirmPassword: z
+      .string()
+      .min(6, "Password must be at least 6 characters"),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
@@ -31,7 +39,6 @@ const signupSchema = z
   });
 
 export const SignupForm = () => {
-  const { signUp } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof signupSchema>>({
@@ -46,7 +53,10 @@ export const SignupForm = () => {
   const onSubmit = async (values: z.infer<typeof signupSchema>) => {
     try {
       setIsLoading(true);
-      await signUp(values.email, values.password);
+      const formData = new FormData();
+      formData.append("email", values.email);
+      formData.append("password", values.password);
+      await signup(formData);
     } catch (error) {
       console.error("Signup error:", error);
     } finally {
@@ -57,7 +67,9 @@ export const SignupForm = () => {
   return (
     <Card className="w-full shadow-lg animate-fade-in">
       <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl font-bold text-center">Create an account</CardTitle>
+        <CardTitle className="text-2xl font-bold text-center">
+          Create an account
+        </CardTitle>
         <CardDescription className="text-center">
           Enter your information to create an account
         </CardDescription>
@@ -117,7 +129,10 @@ export const SignupForm = () => {
         </Form>
         <div className="mt-4 text-center text-sm">
           Already have an account?{" "}
-          <Link href="/login" className="text-primary font-medium hover:underline">
+          <Link
+            href="/login"
+            className="text-primary font-medium hover:underline"
+          >
             Sign in
           </Link>
         </div>
