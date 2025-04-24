@@ -31,8 +31,8 @@ An AI-powered notes application that allows users to create, update, delete, and
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/your-username/ai-powered-notes-app.git
-   cd ai-powered-notes-app
+   git clone https://github.com/your-username/ai-notes-app.git
+   cd ai-notes-app
 
    ```
 
