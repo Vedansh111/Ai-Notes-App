@@ -1,25 +1,35 @@
-"use client"
+"use client";
 
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { ProtectedLayout } from "@/components/layout/ProtectedLayout";
 import { NoteEditor } from "@/components/notes/NoteEditor";
 import { toast } from "@/components/ui/use-toast";
+import { createNote } from "@/services/noteService";
+import { Note } from "@/types";
 
 const NewNote = () => {
   const { user } = useAuth();
   const router = useRouter();
 
-  const handleCreateNote = async () => {
+  const handleCreateNote = async (noteData: Partial<Note>) => {
     if (!user) return;
 
     try {
+      const newNote = await createNote({
+        user_id: user.id,
+        is_archived: false,
+        title: noteData.title || "Untitled",
+        content: noteData.content || "",
+        summary: noteData.summary,
+      });
+
       toast({
         title: "Note created",
         description: "Your note has been created successfully",
       });
 
-      router.push(`/dashboard`);
+    //   router.push(`/dashboard`);
     } catch (error) {
       toast({
         title: "Error creating note",
@@ -32,10 +42,7 @@ const NewNote = () => {
   return (
     <ProtectedLayout>
       <div className="container py-8">
-        <NoteEditor
-          onSave={handleCreateNote}
-          isLoading={false}
-        />
+        <NoteEditor onSave={handleCreateNote} isLoading={false} />
       </div>
     </ProtectedLayout>
   );
