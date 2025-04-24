@@ -44,13 +44,22 @@ An AI-powered notes application that allows users to create, update, delete, and
    - Create a .env.local file in the root of the project.
    - Add the following variables (replace with your actual keys and URL):
 
+
+    ```bash
    NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
    OPENAI_API_KEY=your_openai_api_key
 
+   ```
+  
+
 4. **Run the application**
 
    Start the development server:
+   ```bash
    npm run dev
+
+   ```
+   
 
    Visit http://localhost:3000 in your browser to view the application.
