@@ -1,73 +1,92 @@
-# Welcome to your Lovable project
+# AI-Powered Notes App
 
-## Project info
+An AI-powered notes application that allows users to create, update, delete, and summarize notes with the help of OpenAI's GPT models. This app stores user notes in a database and generates short summaries for each note using AI.
 
-**URL**: https://lovable.dev/projects/60e1351e-f0e3-4940-b683-c3c7f0a5ad7b
+## Features
 
-## How can I edit this code?
+- **Create Notes:** Add new notes with titles and content.
+- **Update Notes:** Edit existing notes.
+- **Delete Notes:** Remove notes permanently.
+- **AI Summarization:** Generate a concise 1-2 line summary for each note using OpenAI.
+- **User Authentication:** Sign in and create personal notes with authentication.
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
+- **Frontend:** React (with Next.js)
+- **Backend:** Node.js with Supabase (for database and authentication)
+- **AI Integration:** OpenAI or other AI services (for summarization)
+- **Authentication:** Supabase or other OAuth solutions
+- **Deployment:** Vercel / Netlify (for frontend), Heroku or other cloud providers (for backend)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/60e1351e-f0e3-4940-b683-c3c7f0a5ad7b) and start prompting.
+## Installation
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
 
-**Use your preferred IDE**
+1. **Node.js** - Make sure you have Node.js installed. You can download it from [here](https://nodejs.org/).
+2. **Supabase Account** - You'll need a Supabase account to manage your database. Sign up at [Supabase](https://supabase.io/).
+3. **OpenAI API Key** - To use the AI summarization feature, you'll need an OpenAI API key. You can get it from [OpenAI](https://beta.openai.com/signup/).
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Steps
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/ai-powered-notes-app.git
+   cd ai-powered-notes-app
+   ```
 
-Follow these steps:
+# AI-Powered Notes App
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+An AI-powered notes application that allows users to create, update, delete, and summarize notes with the help of OpenAI's GPT models. This app stores user notes in a database and generates short summaries for each note using AI.
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## Features
 
-# Step 3: Install the necessary dependencies.
-npm i
+- **Create Notes:** Add new notes with titles and content.
+- **Update Notes:** Edit existing notes.
+- **Delete Notes:** Remove notes permanently.
+- **AI Summarization:** Generate a concise 1-2 line summary for each note using OpenAI.
+- **User Authentication:** Sign in and create personal notes with authentication.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+## Tech Stack
 
-**Edit a file directly in GitHub**
+- **Frontend:** React (with Next.js)
+- **Backend:** Node.js with Supabase (for database and authentication)
+- **AI Integration:** OpenAI or other AI services (for summarization)
+- **Authentication:** Supabase or other OAuth solutions
+- **Deployment:** Vercel / Netlify (for frontend), Heroku or other cloud providers (for backend)
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Installation
 
-**Use GitHub Codespaces**
+### Prerequisites
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+1. **Node.js** - Make sure you have Node.js installed. You can download it from [here](https://nodejs.org/).
+2. **Supabase Account** - You'll need a Supabase account to manage your database. Sign up at [Supabase](https://supabase.io/).
+3. **OpenAI API Key** - To use the AI summarization feature, you'll need an OpenAI API key. You can get it from [OpenAI](https://beta.openai.com/signup/).
 
-## What technologies are used for this project?
+### Steps
 
-This project is built with:
+1. **Clone the repository**
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+   ```bash
+   git clone https://github.com/your-username/ai-powered-notes-app.git
+   cd ai-powered-notes-app
 
-## How can I deploy this project?
+   ```
 
-Simply open [Lovable](https://lovable.dev/projects/60e1351e-f0e3-4940-b683-c3c7f0a5ad7b) and click on Share -> Publish.
+2. **Install dependencies**
+   npm install
 
-## Can I connect a custom domain to my Lovable project?
+3. **Setup Environment Variables**
 
-Yes, you can!
+   - Create a .env.local file in the root of the project.
+   - Add the following variables (replace with your actual keys and URL):
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   OPENAI_API_KEY=your_openai_api_key
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+4. **Run the application**
+
+   Start the development server:
+   npm run dev
+
+   Visit http://localhost:3000 in your browser to view the application.
