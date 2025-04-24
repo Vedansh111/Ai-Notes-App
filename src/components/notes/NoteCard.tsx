@@ -1,4 +1,5 @@
 
+import { Sparkles } from "lucide-react";
 import { Note } from "../../types";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
 import { formatDistanceToNow } from "date-fns";
@@ -37,7 +38,7 @@ export const NoteCard = ({ note, onClick }: NoteCardProps) => {
       {note.summary && (
         <CardFooter className="pt-2 pb-4 border-t text-xs text-muted-foreground">
           <div>
-            <span className="font-medium">Summary:</span> {note.summary.length > 60 
+            <span className="font-medium">AI Summary:</span> {note.summary.length > 60 
               ? `${note.summary.substring(0, 60)}...` 
               : note.summary}
           </div>

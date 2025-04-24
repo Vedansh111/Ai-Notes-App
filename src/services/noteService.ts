@@ -1,3 +1,4 @@
+
 import { createClient } from "@/utils/supabase/client";  // Ensure Supabase client is imported
 import { Note } from "@/types"; // Assuming you have a Note type
 import { getUser } from "@/lib/auth-actions";
@@ -89,18 +90,4 @@ export const deleteNote = async (id: string): Promise<void> => {
   if (error) {
     throw new Error("Error deleting note: " + error.message);
   }
-};
-
-// Generate a summary using AI (mock for now)
-export const generateSummary = async (content: string): Promise<string> => {
-  await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate delay for AI summary
-  // Mock AI summarization
-  if (!content) return "No content to summarize";
-
-  const sentences = content.split(/[.!?]+/).filter(s => s.trim().length > 0);
-  if (sentences.length <= 2) return content;
-
-  // Simple summarization by taking the first sentence
-  const firstSentence = sentences[0].trim() + '.';
-  return firstSentence + " " + (sentences.length > 3 ? sentences[1].trim() + '.' : '');
 };

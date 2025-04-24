@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { ReactNode } from "react";
 import { useRouter } from "next/navigation";
@@ -10,7 +10,7 @@ interface AuthLayoutProps {
 }
 
 export const AuthLayout = ({ children }: AuthLayoutProps) => {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isLoading, user } = useAuth();
   const router = useRouter();
 
   if (isLoading) {
@@ -24,15 +24,13 @@ export const AuthLayout = ({ children }: AuthLayoutProps) => {
     );
   }
 
-  if (isAuthenticated) {
+  if (user) {
     router.push("/dashboard");
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/10 to-secondary flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        {children}
-      </div>
+      <div className="w-full max-w-md">{children}</div>
     </div>
   );
 };

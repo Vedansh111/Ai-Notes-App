@@ -1,115 +1,20 @@
-import { useParams, useRouter } from "next/navigation";
-import { ProtectedLayout } from "@/components/layout/ProtectedLayout";
-import { NoteEditor } from "@/components/notes/NoteEditor";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getNote, updateNote, deleteNote } from "@/services/noteService";
-import { createClient } from "@/utils/supabase/server";
-import { toast } from "@/components/ui/use-toast";
-import { Loader2 } from "lucide-react";
-import { Note } from "@/types";
+import { NoteDetailClient } from "@/components/notes/NoteClientDetail";
+import { createClient } from "@/utils/supabase/client";
 
 export async function generateStaticParams() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: notes, error } = await supabase.from("notes").select("id");
 
-  if (error) {
-    console.error("Error fetching notes:", error.message);
+  if (error || !notes) {
+    console.error("Error fetching notes:", error?.message || "No data");
     return [];
   }
 
   return notes.map((note) => ({
-    id: note.id,
+    id: note.id.toString(),
   }));
 }
 
-export default function NoteDetail () {
-  const { id } = useParams<{ id: string }>();
-  const router = useRouter();
-  const queryClient = useQueryClient();
-
-  const {
-    data: note,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["note", id],
-    queryFn: () => getNote(id || ""),
-    enabled: !!id,
-  });
-
-  const updateMutation = useMutation({
-    mutationFn: (data: Partial<Note>) => updateNote(id || "", data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["notes"] });
-      queryClient.invalidateQueries({ queryKey: ["note", id] });
-    },
-  });
-
-  const deleteMutation = useMutation({
-    mutationFn: () => deleteNote(id || ""),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["notes"] });
-      router.push("/dashboard");
-      toast({
-        description: "Note deleted successfully",
-      });
-    },
-    onError: () => {
-      toast({
-        title: "Error",
-        description: "Failed to delete note",
-        variant: "destructive",
-      });
-    },
-  });
-
-  const handleSave = async (data: Partial<Note>) => {
-    await updateMutation.mutateAsync(data);
-  };
-
-  const handleDelete = async () => {
-    await deleteMutation.mutateAsync();
-  };
-
-  if (isLoading) {
-    return (
-      <ProtectedLayout>
-        <div className="container py-8 flex items-center justify-center h-64">
-          <div className="text-center">
-            <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
-            <p className="text-muted-foreground">Loading note...</p>
-          </div>
-        </div>
-      </ProtectedLayout>
-    );
-  }
-
-  if (error || !note) {
-    return (
-      <ProtectedLayout>
-        <div className="container py-8 text-center">
-          <p className="text-destructive">Error: Note not found</p>
-          <button
-            className="text-primary mt-4 underline"
-            onClick={() => router.push("/dashboard")}
-          >
-            Return to Dashboard
-          </button>
-        </div>
-      </ProtectedLayout>
-    );
-  }
-
-  return (
-    <ProtectedLayout>
-      <div className="container py-8 max-w-4xl mx-auto">
-        <NoteEditor
-          note={note}
-          onSave={handleSave}
-          onDelete={handleDelete}
-          isLoading={updateMutation.isPending}
-        />
-      </div>
-    </ProtectedLayout>
-  );
-};
+export default async function NotePage({ params }: { params: { id: string } }) {
+  return <NoteDetailClient id={params.id} />;
+}

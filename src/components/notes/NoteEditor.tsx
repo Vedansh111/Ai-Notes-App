@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState, useEffect } from "react";
 import { Button } from "../ui/button";
@@ -7,19 +7,19 @@ import { Textarea } from "../ui/textarea";
 import { Loader2, RefreshCcw, Save, Trash } from "lucide-react";
 import { Note } from "../../types";
 import { Badge } from "../ui/badge";
-import { 
-  AlertDialog, 
-  AlertDialogAction, 
-  AlertDialogCancel, 
-  AlertDialogContent, 
-  AlertDialogDescription, 
-  AlertDialogFooter, 
-  AlertDialogHeader, 
-  AlertDialogTitle, 
-  AlertDialogTrigger 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
 } from "../ui/alert-dialog";
 import { toast } from "../ui/use-toast";
-import { generateSummary } from "../../services/noteService";
+import { generateSummary } from "@/services/openai";
 
 interface NoteEditorProps {
   note?: Note;
@@ -56,7 +56,7 @@ export const NoteEditor = ({
   };
 
   const handleSave = async (
-    saveTitle = title, 
+    saveTitle = title,
     saveContent = content,
     saveSummary = summary
   ) => {
@@ -121,7 +121,7 @@ export const NoteEditor = ({
           placeholder="Untitled"
           className="text-2xl font-bold bg-transparent border-none focus-visible:ring-0 focus-visible:ring-offset-0 px-0 h-auto"
         />
-        
+
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
@@ -141,12 +141,8 @@ export const NoteEditor = ({
               </>
             )}
           </Button>
-          
-          <Button
-            onClick={() => handleSave()}
-            size="sm"
-            disabled={isLoading}
-          >
+
+          <Button onClick={() => handleSave()} size="sm" disabled={isLoading}>
             {isLoading ? (
               <>
                 <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -154,12 +150,12 @@ export const NoteEditor = ({
               </>
             ) : (
               <>
-                <Save className="h-4 w-4 mr-2" />
+                <Save className="h-4 w-4 mr-0.5" />
                 Save
               </>
             )}
           </Button>
-          
+
           {onDelete && (
             <AlertDialog>
               <AlertDialogTrigger asChild>
@@ -171,12 +167,13 @@ export const NoteEditor = ({
                 <AlertDialogHeader>
                   <AlertDialogTitle>Delete Note</AlertDialogTitle>
                   <AlertDialogDescription>
-                    Are you sure you want to delete this note? This action cannot be undone.
+                    Are you sure you want to delete this note? This action
+                    cannot be undone.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction 
+                  <AlertDialogAction
                     onClick={onDelete}
                     className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                   >
@@ -188,16 +185,18 @@ export const NoteEditor = ({
           )}
         </div>
       </div>
-      
+
       {summary && (
         <div className="bg-secondary p-3 rounded-md">
           <div className="flex items-center gap-2 mb-1">
-            <Badge variant="outline" className="bg-primary/10">Summary</Badge>
+            <Badge variant="outline" className="bg-primary/10">
+              AI Summary
+            </Badge>
           </div>
           <p className="text-sm text-muted-foreground">{summary}</p>
         </div>
       )}
-      
+
       <Textarea
         value={content}
         onChange={handleContentChange}
