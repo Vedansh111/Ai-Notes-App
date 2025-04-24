@@ -37,7 +37,11 @@ An AI-powered notes application that allows users to create, update, delete, and
    ```
 
 2. **Install dependencies**
+    ```bash
    npm install
+
+   ```
+   
 
 3. **Setup Environment Variables**
 
