@@ -32,7 +32,7 @@ An AI-powered notes application that allows users to create, update, delete, and
 
    ```bash
    git clone https://github.com/your-username/ai-powered-notes-app.git
-   cd ai-powered-notes-app
+   cd ai-notes-app
 
    ```
 
